@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import AdminLogin from './AdminLogin';
 import AdminDashboard from './AdminDashboardNew';
 import { ServerInfo } from './types';
+import { getApiBaseUrl, getDefaultFetchOptions, getAuthHeaders } from '../../utils/apiConfig';
 
 const Admin: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -18,13 +19,16 @@ const Admin: React.FC = () => {
       }
 
       try {
-        // Always use proxy to avoid CORS issues
-        const API_BASE = '/proxy';
+        const API_BASE = getApiBaseUrl();
+        const defaultOptions = getDefaultFetchOptions();
+        const authHeaders = getAuthHeaders(token);
 
         const res = await fetch(`${API_BASE}/currentuser`, {
+          ...defaultOptions,
           method: 'GET',
-          headers: { 
-            'Authorization': token.startsWith('Bearer ') ? token : `Bearer ${token}` 
+          headers: {
+            ...defaultOptions.headers,
+            ...authHeaders
           }
         });
 

@@ -3,7 +3,6 @@ export const getApiBaseUrl = (): string => {
 };
 
 export const getDefaultFetchOptions = (): RequestInit => ({
-  credentials: 'include',
   headers: {
     'Accept': 'application/json',
   } as Record<string, string>
