@@ -6,7 +6,7 @@ export const getDefaultFetchOptions = (): RequestInit => ({
   credentials: 'include',
   headers: {
     'Accept': 'application/json',
-  }
+  } as Record<string, string>
 });
 
 export const getAuthHeaders = (token?: string): Record<string, string> => {

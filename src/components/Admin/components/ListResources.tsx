@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getApiBaseUrl, getDefaultFetchOptions, getAuthHeaders } from '../../utils/apiConfig';
+import { getApiBaseUrl, getDefaultFetchOptions, getAuthHeaders } from '../../../utils/apiConfig';
 import { html, formatJSON } from '../utils/formatters';
 import { ApiFunction } from '../types';
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getApiBaseUrl, getDefaultFetchOptions } from '../utils/apiConfig';
+import { getApiBaseUrl, getDefaultFetchOptions } from '../../utils/apiConfig';
 
 interface AdminLoginProps {
   onLoginSuccess: () => void;

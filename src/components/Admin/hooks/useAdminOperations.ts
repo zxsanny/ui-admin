@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 import { OUTPUT_TITLES, OPERATIONS_CONFIG } from '../config/constants';
-import { getApiBaseUrl, getDefaultFetchOptions, getAuthHeaders } from '../../utils/apiConfig';
+import { getApiBaseUrl, getDefaultFetchOptions, getAuthHeaders } from '../../../utils/apiConfig';
 import { 
   User, 
   UseAdminOperationsReturn, 
@@ -25,7 +25,7 @@ const useAdminOperations = (): UseAdminOperationsReturn => {
     const authHeaders = getAuthHeaders(AUTH_TOKEN);
     
     const h: Record<string, string> = { 
-      ...defaultOptions.headers,
+      ...(defaultOptions.headers as Record<string, string>),
       ...authHeaders,
       ...headers 
     };
