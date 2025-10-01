@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from 'react';
 import { OUTPUT_TITLES, OPERATIONS_CONFIG } from '../config/constants';
+import { getApiBaseUrl, getDefaultFetchOptions, getAuthHeaders } from '../../utils/apiConfig';
 import { 
   User, 
   UseAdminOperationsReturn, 
@@ -16,18 +17,18 @@ const useAdminOperations = (): UseAdminOperationsReturn => {
   const [users, setUsers] = useState<User[] | null>(null);
   const [searchValue, setSearchValue] = useState<string>('');
 
-  let API_BASE = '/proxy';
-  let apiResolved = true;
-  let AUTH_TOKEN = localStorage.getItem('authToken') || '';
-
-  const resolveApiBase = async (): Promise<string> => {
-    return API_BASE;
-  };
+  const AUTH_TOKEN = localStorage.getItem('authToken') || '';
 
   const api: ApiFunction = useCallback(async (path, { method = 'GET', json, formData, headers = {} } = {}) => {
-    await resolveApiBase();
-    const h: Record<string, string> = { ...headers };
-    if (AUTH_TOKEN) h['Authorization'] = AUTH_TOKEN.startsWith('Bearer ') ? AUTH_TOKEN : `Bearer ${AUTH_TOKEN}`;
+    const API_BASE = getApiBaseUrl();
+    const defaultOptions = getDefaultFetchOptions();
+    const authHeaders = getAuthHeaders(AUTH_TOKEN);
+    
+    const h: Record<string, string> = { 
+      ...defaultOptions.headers,
+      ...authHeaders,
+      ...headers 
+    };
     
     let body: string | FormData | undefined;
     if (json !== undefined) { 
@@ -37,7 +38,12 @@ const useAdminOperations = (): UseAdminOperationsReturn => {
       body = formData; 
     }
     
-    const res = await fetch(`${API_BASE}${path}`, { method, headers: h, body });
+    const res = await fetch(`${API_BASE}${path}`, { 
+      ...defaultOptions,
+      method, 
+      headers: h, 
+      body
+    });
     const text = await res.text();
     let data: any;
     try { 

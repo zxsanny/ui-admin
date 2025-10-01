@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { getApiBaseUrl, getDefaultFetchOptions, getAuthHeaders } from '../../utils/apiConfig';
 import { html, formatJSON } from '../utils/formatters';
 import { ApiFunction } from '../types';
 
@@ -29,19 +30,19 @@ const ListResources: React.FC<ListResourcesProps> = ({
       setStatusMessage(`Downloading installer for ${envType}...`);
       setOutputMeta(`${new Date().toLocaleString()} — Downloading installer from ${endpoint}`);
       
-      // Use proxy for consistency with other API calls
-      const API_BASE = '/proxy';
-
-      // Get auth token
+      const API_BASE = getApiBaseUrl();
+      const defaultOptions = getDefaultFetchOptions();
       const AUTH_TOKEN = localStorage.getItem('authToken') || '';
-      const headers: Record<string, string> = {};
-      if (AUTH_TOKEN) {
-        headers['Authorization'] = AUTH_TOKEN.startsWith('Bearer ') ? AUTH_TOKEN : `Bearer ${AUTH_TOKEN}`;
-      }
+      const authHeaders = getAuthHeaders(AUTH_TOKEN);
 
-      // Add auth header via fetch and create blob URL for secure download
       const downloadUrl = `${API_BASE}${endpoint}`;
-      const response = await fetch(downloadUrl, { headers });
+      const response = await fetch(downloadUrl, { 
+        ...defaultOptions,
+        headers: {
+          ...defaultOptions.headers,
+          ...authHeaders
+        }
+      });
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getApiBaseUrl, getDefaultFetchOptions } from '../utils/apiConfig';
 
 interface AdminLoginProps {
   onLoginSuccess: () => void;
@@ -16,12 +17,14 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess }) => {
     setError('');
 
     try {
-      // Always use proxy to avoid CORS issues
-      const API_BASE = '/proxy';
+      const API_BASE = getApiBaseUrl();
+      const defaultOptions = getDefaultFetchOptions();
 
       const response = await fetch(`${API_BASE}/login`, {
+        ...defaultOptions,
         method: 'POST',
         headers: {
+          ...defaultOptions.headers,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
