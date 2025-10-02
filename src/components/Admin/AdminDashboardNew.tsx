@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import AdminHeader from './components/AdminHeader';
 import AdminSidebar from './components/AdminSidebar';
 import AdminContent from './components/AdminContent';
+import MobileNavigation from './components/MobileNavigation';
 import useAdminOperations from './hooks/useAdminOperations';
 import { extractToken } from './utils/parsers';
 import './Admin.css';
@@ -147,7 +148,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
           gridTemplateColumns: '240px 1fr', 
           gap: '20px', 
           padding: '20px',
-          minHeight: 'calc(100vh - 80px)'
+          minHeight: 'calc(100vh - 80px)',
+          width: '100%',
+          maxWidth: '100%',
+          boxSizing: 'border-box',
+          overflow: 'hidden'
         }}>
           <AdminSidebar 
             operations={operations}
@@ -172,6 +177,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
             operations={operations}
           />
         </main>
+        
+        <MobileNavigation onOpClick={handleOpClick} />
       </div>
     </>
   );

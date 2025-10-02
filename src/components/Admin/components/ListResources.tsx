@@ -127,19 +127,35 @@ const ListResources: React.FC<ListResourcesProps> = ({
         background: '#0b1223',
         borderRadius: '8px',
         padding: '16px',
-        flex: '1'
+        flex: '1',
+        width: `calc(100% - 50px)`,
+        maxWidth: '100%',
+        boxSizing: 'border-box',
+        overflow: 'hidden'
       }}>
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginBottom: '12px'
+          marginBottom: '12px',
+          width: '100%',
+          maxWidth: '100%',
+          boxSizing: 'border-box',
+          gap: '8px',
+          flexWrap: 'nowrap'
         }}>
           <h4 style={{ 
             margin: '0', 
             fontSize: '18px', 
             fontWeight: '600', 
-            color: '#e5e7eb'
+            color: '#e5e7eb',
+            flex: '1',
+            minWidth: '0',
+            maxWidth: 'calc(100% - 120px)',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            boxSizing: 'border-box'
           }}>
             {title}
           </h4>
@@ -149,19 +165,25 @@ const ListResources: React.FC<ListResourcesProps> = ({
               envType
             )}
             style={{
-              padding: '8px 16px',
+              padding: '6px 10px',
               borderRadius: '6px',
               border: '1px solid #4f46e5',
               background: 'linear-gradient(135deg, #4f46e5, #7c3aed)',
               color: '#ffffff',
               cursor: 'pointer',
-              fontSize: '14px',
+              fontSize: '11px',
               fontWeight: '500',
               transition: 'all 0.2s ease',
               boxShadow: '0 2px 4px rgba(79, 70, 229, 0.3)',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px'
+              gap: '4px',
+              flexShrink: 0,
+              whiteSpace: 'nowrap',
+              minWidth: 'fit-content',
+              maxWidth: '110px',
+              width: 'auto',
+              boxSizing: 'border-box'
             }}
             onMouseEnter={(e) => {
               (e.target as HTMLElement).style.transform = 'translateY(-1px)';
@@ -203,9 +225,11 @@ const ListResources: React.FC<ListResourcesProps> = ({
                     listStyle: 'none',
                     padding: 0,
                     margin: 0,
+                    width: '100%',
                     maxWidth: '100%',
-                    overflowWrap: 'anywhere' as const,
-                    wordBreak: 'break-word' as const
+                    boxSizing: 'border-box',
+                    overflowWrap: 'break-word' as const,
+                    wordBreak: 'break-all' as const
                   }}>
                     {resources.map((item, index) => (
                       <li key={index} style={{
@@ -214,14 +238,16 @@ const ListResources: React.FC<ListResourcesProps> = ({
                         background: '#111827',
                         borderRadius: '6px',
                         marginBottom: '8px',
-                        maxWidth: '100%',
+                        width: '100%',
+                        boxSizing: 'border-box',
                         whiteSpace: 'normal' as const,
-                        overflowWrap: 'anywhere' as const,
-                        wordBreak: 'break-word' as const,
+                        overflowWrap: 'break-word' as const,
+                        wordBreak: 'break-all' as const,
                         color: '#e5e7eb',
-                        fontSize: '16px',
+                        fontSize: '14px',
                         fontWeight: '500',
-                        fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace'
+                        fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+                        overflow: 'hidden'
                       }}>
                         {typeof item === 'string' ? item : JSON.stringify(item)}
                       </li>
@@ -264,28 +290,37 @@ const ListResources: React.FC<ListResourcesProps> = ({
   };
 
   return (
-    <div style={{ gridColumn: '1 / -1' }}>
+    <div style={{ 
+      gridColumn: '1 / -1',
+      width: '100%',
+      maxWidth: '100%',
+      overflow: 'hidden',
+      boxSizing: 'border-box'
+    }}>
       {/* Service message for resources */}
       {lastLoadedTime && (
         <div style={{ 
           color: '#94a3b8', 
           fontSize: '14px',
           marginBottom: '16px',
-          padding: '10px 16px',
+          padding: '10px 10px',
           background: 'rgba(15, 23, 42, 0.6)',
           borderRadius: '8px',
           border: '1px solid #334155'
         }}>
-          {lastLoadedTime} — Resources loaded from both environments
+          {lastLoadedTime} — Resources updated
         </div>
       )}
       
-      {/* Two-column layout for environments */}
+      {/* Stacked layout for environments */}
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        display: 'flex',
+        flexDirection: 'column',
         gap: '20px',
-        marginBottom: '24px'
+        marginBottom: '24px',
+        width: '100%',
+        maxWidth: '100%',
+        boxSizing: 'border-box'
       }}>
         {renderResourceSection(prodResources, 'Prod Env', 'prod')}
         {renderResourceSection(stageResources, 'Stage Env', 'stage')}
