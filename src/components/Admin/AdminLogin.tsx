@@ -95,13 +95,13 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess }) => {
               onChange={(e) => setEmail(e.target.value)}
               required
               style={{
-                width: '100%',
-                padding: '0.75rem',
+                width: '90%',
+                padding: '0.5rem 0.75rem',
                 border: '1px solid #475569',
                 borderRadius: '4px',
                 background: '#334155',
                 color: '#f8fafc',
-                fontSize: '1rem'
+                fontSize: '0.875rem'
               }}
             />
           </div>
@@ -120,13 +120,13 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess }) => {
               onChange={(e) => setPassword(e.target.value)}
               required
               style={{
-                width: '100%',
-                padding: '0.75rem',
+                width: '90%',
+                padding: '0.5rem 0.75rem',
                 border: '1px solid #475569',
                 borderRadius: '4px',
                 background: '#334155',
                 color: '#f8fafc',
-                fontSize: '1rem'
+                fontSize: '0.875rem'
               }}
             />
           </div>

@@ -5,6 +5,7 @@ import AdminSidebar from './components/AdminSidebar';
 import AdminContent from './components/AdminContent';
 import useAdminOperations from './hooks/useAdminOperations';
 import { extractToken } from './utils/parsers';
+import './Admin.css';
 
 interface AdminDashboardProps {
   onLogout: () => void;
@@ -141,11 +142,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
       <div style={{ minHeight: '100vh', background: 'linear-gradient(180deg, #0b1022 0%, #0f172a 100%)', color: '#e5e7eb' }}>
         <AdminHeader onLogout={handleLogout} />
 
-        <main style={{ 
+        <main className="admin-dashboard-main" style={{ 
           display: 'grid', 
-          gridTemplateColumns: '180px 1fr', 
-          gap: '16px', 
-          padding: '16px',
+          gridTemplateColumns: '240px 1fr', 
+          gap: '20px', 
+          padding: '20px',
           minHeight: 'calc(100vh - 80px)'
         }}>
           <AdminSidebar 

@@ -24,6 +24,7 @@ const ListResources: React.FC<ListResourcesProps> = ({
   const [prodResources, setProdResources] = useState<any[] | ResourceData | null>(null);
   const [stageResources, setStageResources] = useState<any[] | ResourceData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [lastLoadedTime, setLastLoadedTime] = useState<string>('');
 
   const handleDownload = async (endpoint: string, envType: string) => {
     try {
@@ -102,6 +103,7 @@ const ListResources: React.FC<ListResourcesProps> = ({
       setProdResources(prodData);
       setStageResources(stageData);
       setStatusMessage('OK');
+      setLastLoadedTime(new Date().toLocaleString());
       setOutputMeta(`${new Date().toLocaleString()} — Resources loaded from both environments`);
     } catch (e: any) {
       setStatusMessage(e.message);
@@ -263,6 +265,21 @@ const ListResources: React.FC<ListResourcesProps> = ({
 
   return (
     <div style={{ gridColumn: '1 / -1' }}>
+      {/* Service message for resources */}
+      {lastLoadedTime && (
+        <div style={{ 
+          color: '#94a3b8', 
+          fontSize: '14px',
+          marginBottom: '16px',
+          padding: '10px 16px',
+          background: 'rgba(15, 23, 42, 0.6)',
+          borderRadius: '8px',
+          border: '1px solid #334155'
+        }}>
+          {lastLoadedTime} — Resources loaded from both environments
+        </div>
+      )}
+      
       {/* Two-column layout for environments */}
       <div style={{
         display: 'grid',

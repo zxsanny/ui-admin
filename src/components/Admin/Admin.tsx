@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import AdminLogin from './AdminLogin';
 import AdminDashboard from './AdminDashboardNew';
-import { ServerInfo } from './types';
 import { getApiBaseUrl, getDefaultFetchOptions, getAuthHeaders } from '../../utils/apiConfig';
 
 const Admin: React.FC = () => {

@@ -117,7 +117,7 @@ const useAdminOperations = (): UseAdminOperationsReturn => {
         updateOutputTitle('current-user');
         setStatusMessage('Loading...');
         try {
-          const data: User = await api('/currentuser', { method: 'GET' });
+          const data: User = await api('/users/current', { method: 'GET' });
           setStatusMessage('OK');
           setUsers([data]);
           setOutput('');

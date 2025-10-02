@@ -23,11 +23,13 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ operations, currentOpKey, o
   const currentPath = location.pathname;
 
   return (
-    <aside style={{
-      border: '1px solid #1f2937',
-      borderRadius: '12px',
-      background: 'rgba(17, 24, 39, 0.7)',
-      overflow: 'hidden'
+    <aside className="admin-sidebar" style={{
+      border: '1px solid #334155',
+      borderRadius: '16px',
+      background: 'rgba(15, 23, 42, 0.8)',
+      overflow: 'hidden',
+      backdropFilter: 'blur(8px)',
+      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
     }}>
       <div style={{ maxHeight: 'calc(100vh - 260px)', overflow: 'auto' }}>
         {Object.entries(operations).map(([key, op]) => {
@@ -40,32 +42,46 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ operations, currentOpKey, o
               key={key}
               to={route}
               onClick={() => onOpClick(key)}
+              className="sidebar-nav-item"
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
-                padding: '10px 12px',
+                gap: '12px',
+                padding: '16px 20px',
                 cursor: 'pointer',
-                background: isActive ? 'rgba(99, 102, 241, 0.15)' : 'transparent',
-                borderLeft: isActive ? '3px solid #6366f1' : '3px solid transparent',
-                borderBottom: 'none',
+                background: isActive ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.1) 100%)' : 'transparent',
+                borderLeft: isActive ? '4px solid #3b82f6' : '4px solid transparent',
+                borderBottom: '1px solid rgba(51, 65, 85, 0.3)',
                 textDecoration: 'none',
-                color: 'inherit'
+                color: 'inherit',
+                transition: 'all 0.2s ease',
+                position: 'relative'
               }}
               onMouseEnter={(e) => {
                 if (!isActive) {
-                  (e.target as HTMLElement).style.background = 'rgba(99, 102, 241, 0.08)';
+                  (e.target as HTMLElement).style.background = 'rgba(59, 130, 246, 0.08)';
+                  (e.target as HTMLElement).style.transform = 'translateX(4px)';
                 }
               }}
               onMouseLeave={(e) => {
-                (e.target as HTMLElement).style.background = isActive ? 'rgba(99, 102, 241, 0.15)' : 'transparent';
+                (e.target as HTMLElement).style.background = isActive ? 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.1) 100%)' : 'transparent';
+                (e.target as HTMLElement).style.transform = 'translateX(0)';
               }}
             >
               <div style={{ flex: 1 }}>
-                <div style={{ color: '#cbd5e1', fontSize: '14px', fontWeight: '500' }}>
+                <div style={{ 
+                  color: isActive ? '#f1f5f9' : '#cbd5e1', 
+                  fontSize: '15px', 
+                  fontWeight: isActive ? '600' : '500',
+                  marginBottom: '4px'
+                }}>
                   {config.title || op.title}
                 </div>
-                <div style={{ color: '#94a3b8', fontSize: '13px' }}>
+                <div style={{ 
+                  color: isActive ? '#94a3b8' : '#64748b', 
+                  fontSize: '13px',
+                  lineHeight: '1.4'
+                }}>
                   {config.description || ''}
                 </div>
               </div>

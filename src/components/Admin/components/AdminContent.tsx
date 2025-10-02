@@ -167,20 +167,20 @@ const AdminContent: React.FC<AdminContentProps> = ({
     });
   };
   return (
-    <section style={{
+    <section className="admin-content" style={{
       border: '1px solid #1f2937',
       borderRadius: '12px',
       background: 'rgba(17, 24, 39, 0.7)',
       padding: '12px'
     }}>
-      <div style={{ 
+      <div className="header-controls" style={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center',
         marginBottom: '12px'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <h3 style={{ margin: 0, fontSize: '20px' }}>{outputTitle}</h3>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: '1' }}>
+          <h3 style={{ margin: 0, fontSize: '20px', whiteSpace: 'nowrap' }}>{outputTitle}</h3>
           {currentOpKey === 'list-users' && (
             <input
               type="email"
@@ -188,26 +188,32 @@ const AdminContent: React.FC<AdminContentProps> = ({
               value={localSearchValue}
               onChange={(e) => handleSearchChange(e.target.value)}
               onKeyDown={handleKeyDown}
+              className="search-input"
               style={{
-                height: '40px',
-                padding: '0 16px',
-                borderRadius: '8px',
-                border: '2px solid #374151',
-                background: '#1f2937',
-                color: '#e5e7eb',
-                fontSize: '14px',
-                width: '500px',
+                height: '44px',
+                padding: '0 20px',
+                borderRadius: '12px',
+                border: '2px solid #475569',
+                background: 'rgba(30, 41, 59, 0.8)',
+                color: '#f1f5f9',
+                fontSize: '15px',
+                flex: '1',
+                minWidth: '300px',
+                maxWidth: '800px',
                 outline: 'none',
-                transition: 'all 0.2s ease',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                backdropFilter: 'blur(4px)'
               }}
               onFocus={(e) => {
-                e.target.style.border = '2px solid #6366f1';
-                e.target.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.1)';
+                e.target.style.border = '2px solid #3b82f6';
+                e.target.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.1)';
+                e.target.style.background = 'rgba(30, 41, 59, 0.95)';
               }}
               onBlur={(e) => {
-                e.target.style.border = '2px solid #374151';
-                e.target.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                e.target.style.border = '2px solid #475569';
+                e.target.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                e.target.style.background = 'rgba(30, 41, 59, 0.8)';
               }}
             />
           )}
@@ -217,45 +223,49 @@ const AdminContent: React.FC<AdminContentProps> = ({
           <button
             onClick={() => setIsCreateUserModalOpen(true)}
             style={{
-              height: '40px',
-              padding: '0 20px',
-              borderRadius: '8px',
-              border: '2px solid #059669',
-              background: 'linear-gradient(135deg, #10b981, #059669)',
+              height: '44px',
+              padding: '0 24px',
+              borderRadius: '12px',
+              border: '2px solid #10b981',
+              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
               color: '#ffffff',
-              fontSize: '14px',
-              fontWeight: '600',
+              fontSize: '15px',
+              fontWeight: '700',
               cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              boxShadow: '0 2px 4px rgba(16, 185, 129, 0.3)',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 6px -1px rgba(16, 185, 129, 0.3)',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px'
+              gap: '10px',
+              minWidth: '140px',
+              justifyContent: 'center'
             }}
             onMouseEnter={(e) => {
-              (e.target as HTMLElement).style.transform = 'translateY(-1px)';
-              (e.target as HTMLElement).style.boxShadow = '0 4px 8px rgba(16, 185, 129, 0.4)';
+              (e.target as HTMLElement).style.transform = 'translateY(-2px)';
+              (e.target as HTMLElement).style.boxShadow = '0 8px 12px -2px rgba(16, 185, 129, 0.4)';
             }}
             onMouseLeave={(e) => {
               (e.target as HTMLElement).style.transform = 'translateY(0)';
-              (e.target as HTMLElement).style.boxShadow = '0 2px 4px rgba(16, 185, 129, 0.3)';
+              (e.target as HTMLElement).style.boxShadow = '0 4px 6px -1px rgba(16, 185, 129, 0.3)';
             }}
           >
-            <span style={{ fontSize: '16px' }}>+</span>
+            <span style={{ fontSize: '18px', fontWeight: 'bold' }}>+</span>
             Create User
           </button>
         )}
       </div>
-      <div style={{ color: '#94a3b8', fontSize: '14px' }}>{outputMeta}</div>
+      {currentOpKey !== 'list-resources' && (
+        <div style={{ color: '#94a3b8', fontSize: '14px' }}>{outputMeta}</div>
+      )}
       <div 
         className={`human-output ${currentOpKey === 'list-users' || currentOpKey === 'current-user' ? 'users-grid' : ''}`}
         style={{
           display: 'grid',
           gridTemplateColumns: currentOpKey === 'list-users' || currentOpKey === 'current-user' 
-            ? 'repeat(auto-fit, minmax(360px, 1fr))' 
-            : 'repeat(auto-fill, minmax(360px, 1fr))',
-          gap: '24px',
-          marginTop: '16px'
+            ? 'repeat(auto-fill, minmax(400px, 1fr))' 
+            : 'repeat(auto-fill, minmax(400px, 1fr))',
+          gap: '20px',
+          marginTop: '20px'
         }}
       >
         {/* Render React components based on current operation */}
